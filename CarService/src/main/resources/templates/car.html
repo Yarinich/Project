@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<style>
+    html, body {
+        padding: 0;
+        margin: 10px;
+        text-align: center;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .goodDiv {
+        text-align: center;
+        display: inline-block;
+        padding: 20px 30px;
+        margin: 10px 20px;
+        border-radius: 10px;
+        font-size: 18pt;
+        border: 2px solid blueviolet;
+        background: antiquewhite;
+        width: 50%;
+    }
+</style>
+
+    <H1>Машина:</H1>
+    <div>
+        <H3>Стан кондиціонера</H3>
+        <div th:each="el : ${conditioner}" class="goodDiv">
+            <span>Увімкнено: </span><span th:text="${el.status}"/><br>
+            <span>Функція: </span><span th:text="${el.state}"/><br>
+            <span>Потужність: </span><span th:text="${el.power}"/><br>
+            <span>Температура: </span><span th:text="${el.workTemperature}"/><br>
+        </div>
+    </div>
+    <div>
+        <H3>Показники в салоні</H3>
+        <div th:each="el : ${innerSensor}" class="goodDiv">
+            <span>Вологість: </span><span th:text="${el.humidity}"/><br>
+            <span>Температура: </span><span th:text="${el.temperature}"/><br>
+        </div>
+    </div>
+    <div>
+        <H3>Показники з вулиці</H3>
+        <div th:each="el : ${outerSensor}" class="goodDiv">
+            <span>Вологість: </span><span th:text="${el.humidity}"/><br>
+            <span>Температура: </span><span th:text="${el.temperature}"/><br>
+        </div>
+    </div>
+
+    <div>
+        <H4>Температура всередині</H4>
+        <form action="/setInnerTemp" method="post">
+            <input type="text" name="innerTemp" placeholder="Введіть температуру в салоні" class="form-control"><br>
+            <button type="submit" class="btn btn-success">Ввести</button><br>
+        </form>
+        <br>
+        <H4>Вологість всередині</H4>
+        <form action="/setInnerHumidity" method="post">
+            <input type="text" name="innerHumidity" placeholder="Введіть Вологість в салоні" class="form-control"><br>
+            <button type="submit" class="btn btn-success">Ввести</button><br>
+        </form>
+        <br>
+    </div>
+
+    <div>
+        <H4>Температура ззовні</H4>
+        <form action="/setOuterTemp" method="post">
+            <input type="text" name="outerTemp" placeholder="Введіть температуру ззовні" class="form-control"><br>
+            <button type="submit" class="btn btn-success">Ввести</button><br>
+        </form>
+        <br>
+        <H4>Вологість ззовні</H4>
+        <form action="/setOuterHumidity" method="post">
+            <input type="text" name="outerHumidity" placeholder="Введіть Вологість ззовні" class="form-control"><br>
+            <button type="submit" class="btn btn-success">Ввести</button><br>
+        </form>
+        <br>
+    </div>
+
+    <div class="row"><H3>Увімкнути кондиціонер</H3></div>
+    <div class="row">
+        <form action="/setOnOff" method="post">
+            <select name="on_off">
+                <option disabled selected>Вибрати опцію</option>
+                <option value="on">Увімкнути (On)</option>
+                <option value="off">Вимкнути (Off)</option>
+            </select>
+            <button type="submit" class="btn btn-success">Обрати</button><br>
+        </form>
+    </div>
+
+    <div class="row"><H3>Вибрати функцію роботи</H3></div>
+    <div class="row">
+        <form action="/setFunction" method="post">
+            <select name="functions">
+                <option disabled selected>Вибрати функцію</option>
+                <option value="CONDITIONING">Кондиціонування</option>
+                <option value="CONDITIONING_VENTILATION">Кондиціонування + Вентиляція</option>
+                <option value="VENTILATION">Вентиляція</option>
+                <option value="HEATING">Обігрів</option>
+                <option value="HEATING_VENTILATION">Обігрів + Вентиляція</option>
+                <option value="RECIRCULATION">Рециркуляція</option>
+                <option value="DEMISTING">Демістинг</option>
+            </select>
+            <button type="submit" class="btn btn-success">Обрати</button><br>
+        </form>
+    </div>
+
+    <div>
+        <H4>Потужність кондиціонера</H4>
+        <form action="/setPower" method="post">
+            <input type="text" name="power" placeholder="Введіть потужність роботи у (%)" class="form-control"><br>
+            <button type="submit" class="btn btn-success">Ввести</button><br>
+        </form>
+        <br>
+    </div>
+
+    <div>
+        <H4>Температура роботи</H4>
+        <form action="/setTemperature" method="post">
+            <input type="text" name="temperature" placeholder="Введіть бажану температуру в салоні" class="form-control"><br>
+            <button type="submit" class="btn btn-success">Ввести</button><br>
+        </form>
+        <br>
+    </div>
+
+</body>
+</html>
